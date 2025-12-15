@@ -1,5 +1,4 @@
 call plug#begin()
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'rose-pine/neovim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lualine/lualine.nvim'
@@ -16,7 +15,10 @@ Plug 'folke/noice.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'mrcjkb/rustaceanvim'
 Plug 'windwp/nvim-ts-autotag'
-Plug 'catgoose/nvim-colorizer.lua'
+Plug 'nvzone/minty', { 'do': 'Shades Huefy'}
+Plug 'nvzone/volt'
+Plug 'nvzone/showkeys', { 'do': 'ShowkeysToggle'}
+Plug 'brenoprata10/nvim-highlight-colors'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'echasnovski/mini.nvim'
 call plug#end()
@@ -89,7 +91,15 @@ require('mini.tabline').setup()
 require('mini.basics').setup()
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
-
+require('nvim-highlight-colors').setup({
+render = 'virtual',
+virtual_symbol = '',
+})
+require("showkeys").setup({
+	maxkeys = 2;
+	position = "top-right"
+})
+vim.api.nvim_create_autocmd("VimEnter", { callback = function() vim.cmd("ShowkeysToggle") end })
 -- OR setup with some options
 require("noice").setup({
   lsp = {
@@ -120,46 +130,6 @@ require('nvim-ts-autotag').setup({
   -- Empty by default, useful if one of the "opts" global settings
   -- doesn't work well in a specific filetype
 })
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "go", "kotlin", "html", "css" }, 
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (or "all")
-  --ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-  highlight = {
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-} 
 -- Eviline config for lualine
 -- Author: shadmansaleh
 -- Credit: glepnir
@@ -172,13 +142,14 @@ local colors = {
   fg       = '#bbc2cf',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
-  darkblue = '#081633',
+  darkwood = '#081633',
   green    = '#98be65',
   orange   = '#FF8800',
   violet   = '#a9a1e1',
   magenta  = '#c678dd',
-  blue     = '#51afef',
+  wood     = '#51afef',
   red      = '#ec5f67',
+  wood	   = '#b3863e'
 }
 
 local conditions = {
@@ -244,38 +215,38 @@ ins_left {
   function()
     return '▊'
   end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
+  color = { fg = colors.wood }, -- Sets highlighting of component
   padding = { left = 0, right = 1 }, -- We don't need space before this
 }
 
 ins_left {
   -- mode component
   function()
-    return '󰣇'
+    return '/'
   end,
   color = function()
     -- auto change color according to neovims mode
     local mode_color = {
-      n = colors.blue,
-      i = colors.blue,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.blue,
-      no = colors.blue,
-      s = colors.blue,
-      S = colors.blue,
-      [''] = colors.blue,
-      ic = colors.blue,
-      R = colors.blue,
-      Rv = colors.blue,
-      cv = colors.blue,
-      ce = colors.blue,
-      r = colors.blue,
-      rm = colors.blue,
-      ['r?'] = colors.blue,
-      ['!'] = colors.blue,
-      t = colors.blue,
+      n = colors.wood,
+      i = colors.wood,
+      v = colors.wood,
+      [''] = colors.wood,
+      V = colors.wood,
+      c = colors.wood,
+      no = colors.wood,
+      s = colors.wood,
+      S = colors.wood,
+      [''] = colors.wood,
+      ic = colors.wood,
+      R = colors.wood,
+      Rv = colors.wood,
+      cv = colors.wood,
+      ce = colors.wood,
+      r = colors.wood,
+      rm = colors.wood,
+      ['r?'] = colors.wood,
+      ['!'] = colors.wood,
+      t = colors.wood,
     }
     return { fg = mode_color[vim.fn.mode()] }
   end,
@@ -370,7 +341,7 @@ ins_right {
   function()
     return '▊'
   end,
-  color = { fg = colors.blue },
+  color = { fg = colors.wood },
   padding = { left = 1 },
 }
 
@@ -462,7 +433,7 @@ require("rose-pine").setup({
 local cmp = require'cmp'
 
 cmp.setup({
-  snippet = {
+    snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
     end,
@@ -479,8 +450,11 @@ cmp.setup({
     { name = 'luasnip' },
   }, {
     { name = 'buffer' },
+  }),
+formatting = {
+   format = require("nvim-highlight-colors").format
+  }
   })
-})
 
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
@@ -497,19 +471,8 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   }),
 })
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require('lspconfig').clangd.setup{
-  capabilities = capabilities,
-}
-require('lspconfig').cssls.setup{
-  capabilities = capabilities,
-}
-require('lspconfig').html.setup{
-  capabilities = capabilities,
-}
-require('lspconfig').ts_ls.setup{
-  capabilities = capabilities,
-}
-require("colorizer").setup()
+vim.lsp.enable('clangd')
+vim.lsp.enable('cssls')
+vim.lsp.enable('html')
+vim.lsp.enable('ts_ls')
 EOF
