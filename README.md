@@ -1,25 +1,12 @@
-a semi-minimal neovim config
-
+a minimal & featherweight neovim config
+# Features
+- no third party plug managers or extra dependencys
+- plug and play
+- fast autocompletion & lsp support using [blink.cmp](https://github.com/saghen/blink.cmp)
+- lightweight autopairs, statusline, tabline, notifications using [mini.nvim](https://github.com/nvim-mini/mini.nvim)
+- [nordic theme](https://github.com/shaunsingh/nord.nvim)
+- only 34 lines (as the time of writing, expect the number to be changed in the future)
+- better clipboard
+- removed right click mouse menu (you can added it back by removing one line I just don't like it)
 # Installation
-first of all install [vim-plug](https://github.com/junegunn/vim-plug)
-```
-
-git clone https://github.com/olight0/nvim-config
-cd nvim-config
-mkdir ~/.config/nvim
-mv init.vim ~/.config/nvim/
-nvim
-nvim +PlugInstall
-```
-# Q&A
-Q: why use this config
-
-A: idk
-
-Q: what  makes it semi-minamal
-
-A: idk
-
-Q: why did you put Q&A if your going to put idk on everything
-
-A: idk
+run ```sh intsall.sh``` or run ```mkdir ~/.config/nvim && cp ./init.lua ~/.config/nvim/``` 
