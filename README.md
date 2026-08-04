@@ -1,6 +1,8 @@
 a minimal & featherweight NeoVim config
+# dependencies
+```cargo```
 # Features
-- no third party plug managers or extra dependencies
+- no third party plug managers or extra dependencies (beside cargo which is needed for [blink.cmp](https://github.com/saghen/blink.cmp) it is really worth it though)
 - plug and play
 - fast auto-completion & LSP support using [blink.cmp](https://github.com/saghen/blink.cmp)
 - lightweight auto-pairs, status-line, tab-line, notifications using [mini.nvim](https://github.com/nvim-mini/mini.nvim)
